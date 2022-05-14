@@ -8,23 +8,21 @@ def pageRankPower(A: np.matrix , alpha: float , v: np.array) -> np.array:
     :return: Un vecteur x contenant les scores d’importance des noeuds ordonnés dans le même ordre que la matrice d’adjacence.
     """
     # normalise chaque ligne du la matrice
-    P = A / np.sum(A, axis=1)[:, None]
-    
-    e = np.ones((v.size, 1))
+    P = np.array([i/sum(i) for i in A])
+
+    e = np.ones((1, v.size))
 
     # definir la matrice G (Google)
-    G = np.multiply(alpha, P) + np.multiply(1 - alpha, np.multiply(e, v.transpose()))
-
+    G = np.dot(alpha, P) + np.dot(1 - alpha, np.dot(e, v.transpose()))
+    
     # initialiser les scores
     x = np.copy(v)
 
     converged = False
-
     while not converged:
-        new_x = np.multiply(x.transpose(), G).transpose()
-        if new_x == x:
+        new_x = np.dot(x,G)
+        new_x = new_x/np.sum(new_x)
+        if (np.sum(np.absolute(new_x - x)) < 1e-10).all():
             converged = True
-        else:
-            x = new_x
-
+        x = new_x
     return x
