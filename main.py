@@ -9,6 +9,7 @@ def main():
 
     score_linear_method = pageRankLinear.pageRankLinear(matrice_adjacencies, teleportation_factor, vector_personnalisation)
     score_power_method = pageRankPower.pageRankPower(matrice_adjacencies, teleportation_factor, vector_personnalisation)
+    print(score_linear_method)
     print(score_power_method)
 
 if __name__ == "__main__":

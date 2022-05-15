@@ -9,11 +9,15 @@ def pageRankLinear(A: np.matrix , alpha: float , v: np.array) -> np.array:
     """
     P = A / np.sum(A, axis=1)[:, None] # normalise chaque ligne du la matrice
     longueur = P.shape[0]
-
+    """
     # équation page 144
     # comme ax = c := x = a'c
-    c = np.multiply(1 - alpha, v)
-    a_transpose = np.subtract(np.identity(longueur), np.multiply(alpha, P))
-    x = np.multiply(a_transpose, c)
+    c = np.dot(1 - alpha, v)
+    a_transpose = np.subtract(np.identity(longueur), np.dot(alpha, P))
+    x = np.dot(a_transpose, c)
     x = np.divide(x, np.sum(x)) # normalise le vecteur
-    return x
+    """
+    A = (np.identity(longueur) - np.dot(alpha, P)).transpose()
+    x = np.linalg.solve(A, np.dot(1-alpha, v).transpose())
+    x = x/sum(x)
+    return x.transpose()
