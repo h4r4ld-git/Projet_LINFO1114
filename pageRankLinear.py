@@ -18,6 +18,6 @@ def pageRankLinear(A: np.matrix , alpha: float , v: np.array) -> np.array:
     x = np.divide(x, np.sum(x)) # normalise le vecteur
     """
     A = (np.identity(longueur) - np.dot(alpha, P)).transpose()
-    x = np.linalg.solve(A, np.dot(1-alpha, v).transpose())
+    x = np.linalg.solve(A, v.transpose())
     x = x/sum(x)
     return x.transpose()
